@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Skripsi</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <style>
+.highcharts-figure,
+.highcharts-data-table table {
+    min-width: 250px;
+    max-width: 300px;
+    margin: 1em auto;
+}
+
+.highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #ebebeb;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+    padding: 0.5em;
+}
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    text-align: center;
+}
+h1{
+    margin-top: 50px;
+    color: #0000ff;
+}
+.container{
+    position: relative;
+    width: 70px;
+    height: 70px;
+    left: calc(10% - 35px);
+    margin-top: 50px;
+}
+.cb{
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.lb{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    border: 2px solid #aaaaaa;
+    background-color: #666666;
+    box-shadow: 0 15px 8px #888888;
+    cursor: pointer;
+    color: #004400;
+}
+.cb:checked ~ .lb{
+    box-shadow: 0 5px 8px #888888;
+    background-color: #777777;
+    border-color: #cccccc;
+    color: #00dd00;
+}
+.pl{
+    position: absolute;
+    top: 23px;
+    left: 23px;
+    font-size: 24px;
+}
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 550px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+        
+    /* On small screens, set height to 'auto' for the grid */
+    @media screen and (max-width: 767px) {
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse visible-xs">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Dashboard</a></li>
+       
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav hidden-xs">
+      <h2>Logo</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="#section1">Dashboard</a></li>
+        
+      </ul><br>
+    </div>
+    <br>
+    
+    <div class="col-sm-9">
+    
+      <div class="row">
+        <div class="col-sm-4">
+       
+            <figure class="highcharts-figure">
+                <div id="container1"></div>
+            </figure> 
+          
+        </div>
+        <div class="col-sm-4">
+         
+            <figure class="highcharts-figure">
+                <div id="container2"></div>
+            </figure> 
+       
+        </div>
+        <div class="col-sm-4">
+         
+            <figure class="highcharts-figure">
+                <div id="container3"></div>
+            </figure> 
+       
+        </div>
+      </div>
+
+    
+      <div class="row">
+        <div class="container">
+            <input type="checkbox" id="cb" onclick=" myFunction()" class="cb"/>
+            <label for="cb" class="lb"><i class="fas fa-power-off pl"></i></label>
+            <div id="myDIV">OFF</div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</div>
+<script src="db.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script>
+var config = {
+  apiKey: "AIzaSyBYVwVZUBLXSm7iR5Fp6k-dziJGEuhwExk",
+  authDomain: "megaboth007.firebaseapp.com",
+  databaseURL: "https://megaboth007.firebaseio.com",
+  projectId: "megaboth007",
+  storageBucket: "megaboth007.appspot.com",
+  messagingSenderId: "942424390212",
+  appId: "1:942424390212:web:c3622743b0fba57b5a1a11"
+
+  };
+firebase.initializeApp(config);
+var db = firebase.database();
+//var tes = db.ref("/test/int");
+var volt1 = db.ref("/parif/v1");
+var volt2 = db.ref("/parif/v2");
+var volt3 = db.ref("/parif/v3");
+
+
+
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.innerHTML === "OFF") {
+    x.innerHTML = "ON";
+    db.ref("/parif/rl").set("1");
+  } else {
+    x.innerHTML = "OFF";
+    db.ref("/parif/rl").set("0");
+  }
+}
+
+
+
+
+
+Highcharts.chart('container1', {
+
+chart: {
+    type: 'gauge',
+    plotBackgroundColor: null,
+    plotBackgroundImage: null,
+    plotBorderWidth: 0,
+    plotShadow: false,
+    height: '80%'
+},
+
+title: {
+    text: 'Tegangan 1'
+},
+
+pane: {
+    startAngle: -90,
+    endAngle: 89.9,
+    background: null,
+    center: ['50%', '75%'],
+    size: '110%'
+},
+
+// the value axis
+yAxis: {
+    min: 0,
+    max: 400,
+    tickPixelInterval: 72,
+    tickPosition: 'inside',
+    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
+    tickLength: 20,
+    tickWidth: 2,
+    minorTickInterval: null,
+    labels: {
+        distance: 20,
+        style: {
+            fontSize: '14px'
+        }
+    },
+    lineWidth: 0,
+    plotBands: [{
+        from: 0,
+        to: 120,
+        color: '#55BF3B', // green
+        thickness: 20
+    }, {
+        from: 120,
+        to: 260,
+        color: '#DDDF0D', // yellow
+        thickness: 20
+    }, {
+        from: 260,
+        to: 400,
+        color: '#DF5353', // red
+        thickness: 20
+    }]
+},
+
+series: [{
+    name: 'Speed',
+    data: [80],
+    tooltip: {
+        valueSuffix: ' Volt'
+    },
+    dataLabels: {
+        format: '{y} VOLT',
+        borderWidth: 0,
+        color: (
+            Highcharts.defaultOptions.title &&
+            Highcharts.defaultOptions.title.style &&
+            Highcharts.defaultOptions.title.style.color
+        ) || '#333333',
+        style: {
+            fontSize: '16px'
+        }
+    },
+    dial: {
+        radius: '80%',
+        backgroundColor: 'gray',
+        baseWidth: 12,
+        baseLength: '0%',
+        rearLength: '0%'
+    },
+    pivot: {
+        backgroundColor: 'gray',
+        radius: 6
+    }
+
+}]
+
+});
+
+Highcharts.chart('container2', {
+
+chart: {
+    type: 'gauge',
+    plotBackgroundColor: null,
+    plotBackgroundImage: null,
+    plotBorderWidth: 0,
+    plotShadow: false,
+    height: '80%'
+},
+
+title: {
+    text: 'Tegangan 2'
+},
+
+pane: {
+    startAngle: -90,
+    endAngle: 89.9,
+    background: null,
+    center: ['50%', '75%'],
+    size: '110%'
+},
+
+// the value axis
+yAxis: {
+    min: 0,
+    max: 400,
+    tickPixelInterval: 72,
+    tickPosition: 'inside',
+    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
+    tickLength: 20,
+    tickWidth: 2,
+    minorTickInterval: null,
+    labels: {
+        distance: 20,
+        style: {
+            fontSize: '14px'
+        }
+    },
+    lineWidth: 0,
+    plotBands: [{
+        from: 0,
+        to: 120,
+        color: '#55BF3B', // green
+        thickness: 20
+    }, {
+        from: 120,
+        to: 260,
+        color: '#DDDF0D', // yellow
+        thickness: 20
+    }, {
+        from: 260,
+        to: 400,
+        color: '#DF5353', // red
+        thickness: 20
+    }]
+},
+
+series: [{
+    name: 'Speed',
+    data: [80],
+    tooltip: {
+        valueSuffix: ' Volt'
+    },
+    dataLabels: {
+        format: '{y} VOLT',
+        borderWidth: 0,
+        color: (
+            Highcharts.defaultOptions.title &&
+            Highcharts.defaultOptions.title.style &&
+            Highcharts.defaultOptions.title.style.color
+        ) || '#333333',
+        style: {
+            fontSize: '16px'
+        }
+    },
+    dial: {
+        radius: '80%',
+        backgroundColor: 'gray',
+        baseWidth: 12,
+        baseLength: '0%',
+        rearLength: '0%'
+    },
+    pivot: {
+        backgroundColor: 'gray',
+        radius: 6
+    }
+
+}]
+
+});
+
+Highcharts.chart('container3', {
+
+chart: {
+    type: 'gauge',
+    plotBackgroundColor: null,
+    plotBackgroundImage: null,
+    plotBorderWidth: 0,
+    plotShadow: false,
+    height: '80%'
+},
+
+title: {
+    text: 'Tegangan 3'
+},
+
+pane: {
+    startAngle: -90,
+    endAngle: 89.9,
+    background: null,
+    center: ['50%', '75%'],
+    size: '110%'
+},
+
+// the value axis
+yAxis: {
+    min: 0,
+    max: 400,
+    tickPixelInterval: 72,
+    tickPosition: 'inside',
+    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
+    tickLength: 20,
+    tickWidth: 2,
+    minorTickInterval: null,
+    labels: {
+        distance: 20,
+        style: {
+            fontSize: '14px'
+        }
+    },
+    lineWidth: 0,
+    plotBands: [{
+        from: 0,
+        to: 120,
+        color: '#55BF3B', // green
+        thickness: 20
+    }, {
+        from: 120,
+        to: 260,
+        color: '#DDDF0D', // yellow
+        thickness: 20
+    }, {
+        from: 260,
+        to: 400,
+        color: '#DF5353', // red
+        thickness: 20
+    }]
+},
+
+series: [{
+    name: 'Speed',
+    data: [80],
+    tooltip: {
+        valueSuffix: ' Volt'
+    },
+    dataLabels: {
+        format: '{y} VOLT',
+        borderWidth: 0,
+        color: (
+            Highcharts.defaultOptions.title &&
+            Highcharts.defaultOptions.title.style &&
+            Highcharts.defaultOptions.title.style.color
+        ) || '#333333',
+        style: {
+            fontSize: '16px'
+        }
+    },
+    dial: {
+        radius: '80%',
+        backgroundColor: 'gray',
+        baseWidth: 12,
+        baseLength: '0%',
+        rearLength: '0%'
+    },
+    pivot: {
+        backgroundColor: 'gray',
+        radius: 6
+    }
+
+}]
+
+});
+
+// Add some life
+setInterval(() => {
+const chart1 = Highcharts.charts[0];
+const chart2 = Highcharts.charts[1];
+const chart3 = Highcharts.charts[2];
+
+if (chart1 && !chart1.renderer.forExport) {
+  const point = chart1.series[0].points[0];
+    volt1.on("value", function(snapshot) {
+           
+            inc = (snapshot.val());
+             newVal =  parseFloat(inc);
+             //let newVal = point.y + inc;
+             point.update(newVal);
+                });
+           
+    
+    // inc = Math.round((Math.random() - 0.5) * 20);
+
+    
+  
+
+
+}
+if (chart2 && !chart2.renderer.forExport) {
+    const point = chart2.series[0].points[0];
+    volt2.on("value", function(snapshot) {
+           
+           inc = (snapshot.val());
+            newVal =  parseFloat(inc);
+            //let newVal = point.y + inc;
+            point.update(newVal);
+               });
+   
+}
+if (chart3 && !chart3.renderer.forExport) {
+    const point = chart3.series[0].points[0];
+    volt3.on("value", function(snapshot) {
+           
+           inc = (snapshot.val());
+            newVal =  parseFloat(inc);
+            //let newVal = point.y + inc;
+            point.update(newVal);
+               });
+   
+}
+
+}, 1000);
+
+
+
+
+
+</script>
+</body>
+</html>
